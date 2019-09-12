@@ -52,9 +52,10 @@ func (s session) status(client mqtt.Client, message mqtt.Message) {
 	if err := json.Unmarshal(message.Payload(), &p); err != nil {
 		s.logger.Println("Error parsing:", err)
 	}
-	// s.logger.Printf("[%s] %v\n", message.Topic(), p)
+	s.logger.Printf("[%s] %v\n", message.Topic(), p)
 
 	uptime := parseUptime(p.Uptime)
+	s.logger.Printf("[%s] uptime: %s", message.Topic(), uptime.String())
 	promUptime.Set(uptime.Seconds())
 	promSignal.Set(parsePercent(p.SignalLevel))
 	promLink.Set(parsePercent(p.LinkQuality))

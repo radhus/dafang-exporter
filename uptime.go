@@ -16,7 +16,7 @@ func parseUptime(output string) time.Duration {
 		err                  error
 	)
 
-	if uptimeStrs[1] == "days," {
+	if strings.HasPrefix(uptimeStrs[1], "day") {
 		days, err = strconv.Atoi(uptimeStrs[0])
 		if err != nil {
 			return uptime
